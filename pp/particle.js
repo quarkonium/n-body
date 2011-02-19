@@ -1,21 +1,28 @@
 //Copyright 2011 quarkonium http://www.quarkonium.com 
 //Released under the MIT License
 
-var Partice =
+function Partice() =
 {
-  mass: -1, 
-  position: [-1, -1, -1], //Evolves frame to frame
-  velocity: [-1, -1, -1], //Evolves frame to frame
-  force:    [-1, -1, -1], //Computed for each frame
-  update: function(t)
+  this.mass: -1; 
+  this.position: [-1, -1, -1]; //Evolves frame to frame
+  this.velocity: [-1, -1, -1]; //Evolves frame to frame
+  this.force:    [-1, -1, -1]; //Computed for each frame
+
+  this.update = function(t)
   {
     
-  },
-  draw: function()
+  };
+
+  this.draw: function()
   {
-  },
-  force: function(f)
+  };
+
+  this.addForce: function(f)
   {
     //Sum the forces
+    for(i=0; i<3; i++)
+    {
+      this.force[i]+=f[i];
+    }
   }
 };
