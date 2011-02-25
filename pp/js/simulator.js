@@ -5,7 +5,7 @@ function Simulator()
   //this will get turned into an array
   this.mySel = null;
   this.particles = [];
-  this.canvasValid=false;
+  this.canvasValid=true;
   this.t=0; // time in ms
   this.fps = 50; // frames per second
   this.timeInterval = 1000/this.fps; // in ms
@@ -22,6 +22,8 @@ function Simulator()
     if(this.canvas.getContext)
     {
       this.context=this.canvas.getContext("2d");
+    this.context.fillStyle = "rgb(200, 0, 0)";
+    this.context.fillRect(200, 200, 40, 40);
 
       this.ghostcanvas = document.createElement('canvas');
       this.ghostcanvas.height = 400;
@@ -31,51 +33,50 @@ function Simulator()
 
       this.canvas.onselectstart = function () { return false; }
 
-      //this.setInterval(draw, 10);
-
-
       // add our events. Up and down are for dragging,
       // double click is for making new boxes
       this.canvas.onmousedown = this.myDown;
       this.canvas.onmouseup = this.myUp;
       this.canvas.ondblclick = this.myDblClick;
 
-      alert("test");
 
       //initStageObjects();
       //drawStageObjects();
-      //setInterval(updateStage, timeInterval);
+      setInterval(this.draw, this.timeInterval);
 
       // add an orange rectangle
       this.addRect(200, 200, 40, 40, '#FFC02B');
  
       // add a smaller blue rectangle
       this.addRect(25, 90, 25, 25, '#2BB8FF');
+      alert("test");
     }
   }
 
-  function draw() 
+  this.draw = function() 
   {
-    if(canvasValid == false) 
+    if(this.canvasValid == false) 
     {
-      clear(ctx);
+      alert("Simulator::draw");
+      clear(this.context);
  
       // Add stuff you want drawn in the background all the time here
  
       // draw all boxes
-      var l = boxes.length;
-      for (var i = 0; i < l; i++) 
+      var l = this.particles.length;
+      for (i = 0; i < this.particles.length; i++) 
       {
-        drawshape(ctx, boxes[i], boxes[i].fill);
+        alert("loop draw");
+        this.particles[i].draw(this.context, this.particles[i].fill);
       }
  
       // draw selection
       // right now this is just a stroke along the edge of the selected box
-      if (mySel != null) 
+      if (this.mySel != null) 
       {
-        this.context.strokeStyle = mySelColor;
-        this.context.lineWidth = mySelWidth;
-        this.context.strokeRect(mySel.x,mySel.y,mySel.w,mySel.h);
+        this.context.strokeStyle = this.mySelColor;
+        this.context.lineWidth = this.mySelWidth;
+        this.context.strokeRect(this.mySel.x,this.mySel.y,this.mySel.w,this.mySel.h);
       }
  
       // Add stuff you want drawn on top all the time here
@@ -100,15 +101,17 @@ function Simulator()
   
   this.invalidate = function()
   {
+    alert("invalidate");
     this.canvasValid=false;
+    alert("invalidate " + this.canvasValid);
   }
 
   this.addRect = function(x,y,w,h,fill)
   {
-    alert("addRect");
-    //var p = new Particle(x,y,z,h,w,fill);
-    var p = new Particle();
+    alert("addRect " + x + ", " + y + ", " + w + ", " + h + ", " + fill);
+    var p = new Particle(x,y,h,w,fill);
     this.particles.push(p);
     this.invalidate(); 
+    alert("addRect : Leaving");
   }
 }
