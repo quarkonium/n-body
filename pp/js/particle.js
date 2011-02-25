@@ -1,8 +1,10 @@
 //Copyright 2011 quarkonium http://www.quarkonium.com 
 //Released under the MIT License
 
-function Partice(x,y,w,h,fill) =
+//function Particle(x,y,w,h,fill)
+function Particle()
 {
+  alert("Particle");
   //TEST
   this.x = x;
   this.y = y;
