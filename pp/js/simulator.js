@@ -58,27 +58,17 @@ function Simulator()
 
   this.draw = function() 
   {
-    if(this.canvasValid == false) 
+    //Calculate the new particle properties
+    for(i=0; i<this.NUMBER_OF_PARTICLES; i++)
     {
-      //clear(this.context);
-      this.canvas.width=this.canvas.width;
-
-      //Draw all particles
-      this.draw_particles();
- 
-      // draw selection
-      // right now this is just a stroke along the edge of the selected box
-      if (this.mySel != null) 
-      {
-        this.context.strokeStyle = this.mySelColor;
-        this.context.lineWidth = this.mySelWidth;
-        this.context.strokeRect(this.mySel.x,this.mySel.y,this.mySel.w,this.mySel.h);
-      }
- 
-      // Add stuff you want drawn on top all the time here
-      this.canvasValid = true;
-
+      this.particles[i].r[0]+=Math.random();
+      this.particles[i].r[1]+=Math.random();
     }
+
+    this.canvas.width=this.canvas.width;
+
+    //Draw all particles
+    this.draw_particles();
   }
 
   this.myDown = function()
