@@ -50,6 +50,9 @@ function Simulator()
       {
         this.addParticle(this.initial_positions[i], this.initial_velocities[i], this.mass[i]);
       }
+
+      //Draw all particles with their initial positions
+      this.draw_particles();
     }
   }
 
@@ -59,9 +62,7 @@ function Simulator()
     {
       //clear(this.context);
       this.canvas.width=this.canvas.width;
- 
-      // Add stuff you want drawn in the background all the time here
- 
+
       //Draw all particles
       this.draw_particles();
  
@@ -104,7 +105,6 @@ function Simulator()
   {
     var p = new Particle(r0, v0, m);
     this.particles.push(p);
-    this.invalidate();
   }
 
   this.draw_particles = function()
