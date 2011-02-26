@@ -2,6 +2,8 @@ function Simulator()
 {
   this.lable_height = [50, 70, 90];
   this.PIx2 = Math.PI*2;
+  this.G = 6.67428 * Math.pow(10, -11);
+
   this.X_MAX = [false, false, false];
   this.Y_MAX = [false, false, false];
 
@@ -66,44 +68,33 @@ function Simulator()
     //Calculate the new particle properties
     for(i=0; i<this.NUMBER_OF_PARTICLES; i++)
     {
-      var x=this.particles[i].r[0];
-      var y=this.particles[i].r[1];
+      var delta_r = [0, 0, 0]; 
+      var mod_delta_r_square = [0, 0, 0];
+      var fij = [0, 0, 0];
 
-      //Check the bounds
-      if(x>=this.canvas.width - 5)
-      {
-        this.X_MAX[i]=true;
-      }
-      else if(x<=5)
-      {
-        this.X_MAX[i]=false;
-      }
+      var r=this.particles[i].r;
+      var v=this.particles[i].v;
 
-      if(y>=this.canvas.height - 5)
+      for(j=0; j<this.NUMBER_OF_PARTICLES; j++)
       {
-        this.Y_MAX[i]=true;
-      }
-      else if(y<=5)
-      {
-        this.Y_MAX[i]=false;
-      }
+        if(j!=i)
+        {
+          var rj=this.particles[j].r;
 
-      if(this.X_MAX[i] == false)
-      {
-        this.particles[i].r[0]+=1;
-      }
-      else
-      {
-        this.particles[i].r[0]-=1;
-      } 
+          delta_r[0] = r[0] - rj[0];
+          delta_r[1] = r[1] - rj[1];
 
-      if(this.Y_MAX[i] == false)
-      {
-        this.particles[i].r[1]+=1;
-      }
-      else
-      {
-        this.particles[i].r[1]-=1;
+          mod_delta_r_square[0] = delta_r[0] * delta_r[0];
+          mod_delta_r_square[1] = delta_r[1] * delta_r[1];
+
+          var mod_delta_r = Math.sqrt(mod_delta_r_square[0] + mod_delta_r_square[1]);
+          var fij[0] = -1 * this.G * this.particles[j].m * this.particles[i].m 
+                          * delta_r[0] / (mod_delta_r*mod_delta_r*mod_delta_r);
+
+          var fij[1] = -1 * this.G * this.particles[j].m * this.particles[i].m 
+                          * delta_r[1] / (mod_delta_r*mod_delta_r*mod_delta_r);
+          
+        }
       } 
     }
 
@@ -151,5 +142,10 @@ function Simulator()
       this.context.fillStyle = this.colours[i];
       this.context.fill();
     }
+  }
+
+  this.acceleration = function()
+  {
+    
   }
 }
