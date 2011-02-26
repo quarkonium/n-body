@@ -1,7 +1,7 @@
 function Simulator()
 {
   this.lable_height = [50, 70, 90];
-
+  this.PIx2 = Math.PI*2;
   this.X_MAX = [false, false, false];
   this.Y_MAX = [false, false, false];
 
@@ -18,8 +18,7 @@ function Simulator()
   this.mySel = null;
   this.canvasValid=true;
   this.t=0; // time in ms
-  //this.fps = 50; // frames per second
-  this.fps = 1000; // frames per second
+  this.fps = 50; // frames per second
   this.timeInterval = 1000/this.fps; // in ms
   this.canvas = null; // canvas DOM object
   this.context = null; // canvas context
@@ -70,6 +69,9 @@ function Simulator()
       var x=this.particles[i].r[0];
       var y=this.particles[i].r[1];
 
+      this.particles[i].r_previous[0]=x;
+      this.particles[i].r_previous[1]=y;
+
       //Check the bounds
       if(x>=this.canvas.width - 5)
       {
@@ -108,7 +110,7 @@ function Simulator()
       } 
     }
 
-    this.canvas.width=this.canvas.width;
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     //Draw all particles
     this.draw_particles();
@@ -145,17 +147,16 @@ function Simulator()
     for(i=0; i<this.NUMBER_OF_PARTICLES; i++)
     {
       var r = this.particles[i].r;
+      var r_prev = this.particles[i].r_previous;
 
-      //var text = "p" + i + " x : " + r[0] + ", y : " + r[1];
+      //Clear the previous position
+      //this.context.clearRect(r_prev[0]-5, r_prev[1]-5, 10, 10);
 
       this.context.beginPath();
-      this.context.arc(r[0], r[1], 5, 0, Math.PI*2, true);
+      this.context.arc(r[0], r[1], 5, 0, this.PIx2, true);
       this.context.closePath();
-      this.context.fillStyle = this.colours[i]; 
+      this.context.fillStyle = this.colours[i];
       this.context.fill();
-
-      //this.context.font = "16pt Arial";
-      //this.context.fillText(text, 50, this.lable_height[i], 500);
     }
   }
 }

@@ -3,6 +3,8 @@
 
 function Particle(r0, v0, m)
 {
+  this.r_previous = [-1, -1]; 
+
   this.r=r0; 
   this.v=v0; 
   this.mass=m; 
