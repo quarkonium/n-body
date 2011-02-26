@@ -69,9 +69,6 @@ function Simulator()
       var x=this.particles[i].r[0];
       var y=this.particles[i].r[1];
 
-      this.particles[i].r_previous[0]=x;
-      this.particles[i].r_previous[1]=y;
-
       //Check the bounds
       if(x>=this.canvas.width - 5)
       {
@@ -147,10 +144,6 @@ function Simulator()
     for(i=0; i<this.NUMBER_OF_PARTICLES; i++)
     {
       var r = this.particles[i].r;
-      var r_prev = this.particles[i].r_previous;
-
-      //Clear the previous position
-      //this.context.clearRect(r_prev[0]-5, r_prev[1]-5, 10, 10);
 
       this.context.beginPath();
       this.context.arc(r[0], r[1], 5, 0, this.PIx2, true);
