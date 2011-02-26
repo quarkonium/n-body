@@ -1,10 +1,16 @@
 function Simulator()
 {
-  // The node (if any) being selected.
-  // If in the future we want to select multiple objects, 
-  //this will get turned into an array
-  this.mySel = null;
+  //Particle initial values
+  this.NUMBER_OF_PARTICLES = 3;
+  this.colours = ['#FFC02B', '#A60000', '#200772', '#007046'];
+
+  this.initial_positions = [[10, 10, 0], [10, 40, 0],[10, 70, 0 ]];
+  this.initial_velocities = [[0, 0, 0], [0, 0, 0],[0, 0, 0 ]];
+  this.mass = [1, 3, 5];
   this.particles = [];
+
+
+  this.mySel = null;
   this.canvasValid=true;
   this.t=0; // time in ms
   this.fps = 50; // frames per second
@@ -39,10 +45,11 @@ function Simulator()
       var s_ = this;
       setInterval(function() { s_.draw(); }, this.timeInterval);
 
-      this.addParticle(20,20,5,'#FFC02B');
-      this.addParticle(20,40,5,'#A60000');
-      this.addParticle(20,60,5,'#200772');
-      this.addParticle(20,80,5,'#007046');
+      //Initialise the particles
+      for(i=0; i<this.NUMBER_OF_PARTICLES; i++)
+      {
+        this.addParticle(this.initial_positions[i], this.initial_velocities[i], this.mass[i]);
+      }
     }
   }
 
@@ -55,12 +62,8 @@ function Simulator()
  
       // Add stuff you want drawn in the background all the time here
  
-      // draw all boxes
-      var l = this.particles.length;
-      for (i = 0; i < this.particles.length; i++) 
-      {
-        this.particles[i].draw(this.context, this.particles[i].fill);
-      }
+      //Draw all particles
+      this.draw_particles();
  
       // draw selection
       // right now this is just a stroke along the edge of the selected box
@@ -97,10 +100,23 @@ function Simulator()
     this.canvasValid=false;
   }
 
-  this.addParticle = function(x,y,r,fill)
+  this.addParticle = function(r0, v0, m)
   {
-    var p = new Particle(x,y,r,fill);
+    var p = new Particle(r0, v0, m);
     this.particles.push(p);
-    this.invalidate(); 
+    this.invalidate();
+  }
+
+  this.draw_particles = function()
+  {
+    for(i=0; i<this.NUMBER_OF_PARTICLES; i++)
+    {
+      var r = this.particles[i].r;
+      this.context.beginPath();
+      this.context.arc(r[0], r[1], 5, 0, Math.PI*2, true);
+      this.context.closePath();
+      this.context.fillStyle = this.colours[i]; 
+      this.context.fill();
+    }
   }
 }
