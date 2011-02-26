@@ -22,8 +22,8 @@ function Simulator()
       this.context=this.canvas.getContext("2d");
 
       this.ghostcanvas = document.createElement('canvas');
-      this.ghostcanvas.height = 400;
-      this.ghostcanvas.width = 400;
+      this.ghostcanvas.height = this.canvas.height;
+      this.ghostcanvas.width = this.canvas.width;
       this.gctx = this.ghostcanvas.getContext('2d');
 
 
@@ -39,11 +39,7 @@ function Simulator()
       var s_ = this;
       setInterval(function() { s_.draw(); }, this.timeInterval);
 
-      // add an orange rectangle
-      this.addRect(60, 60, 20, 40, '#FFC02B');
- 
-      // add a smaller blue rectangle
-      this.addRect(25, 90, 25, 25, '#2BB8FF');
+      this.addRect(20,20,5,'#FFC02B');
     }
   }
 
@@ -74,6 +70,7 @@ function Simulator()
  
       // Add stuff you want drawn on top all the time here
       this.canvasValid = true;
+
     }
   }
 
@@ -98,9 +95,9 @@ function Simulator()
     this.canvasValid=false;
   }
 
-  this.addRect = function(x,y,w,h,fill)
+  this.addRect = function(x,y,r,fill)
   {
-    var p = new Particle(x,y,h,w,fill);
+    var p = new Particle(x,y,r,fill);
     this.particles.push(p);
     this.invalidate(); 
   }

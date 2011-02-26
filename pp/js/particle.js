@@ -1,13 +1,12 @@
 //Copyright 2011 quarkonium http://www.quarkonium.com 
 //Released under the MIT License
 
-function Particle(x,y,w,h,fill)
+function Particle(x,y,r,fill)
 {
   //TEST
   this.x = x;
   this.y = y;
-  this.w = w; // default width and height?
-  this.h = h;
+  this.r = r;
   this.fill = fill; 
 
   this.mass=-1; 
@@ -22,8 +21,11 @@ function Particle(x,y,w,h,fill)
 
   this.draw = function(ctx, fill)
   {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, 5, 0, Math.PI*2, true);
+    ctx.closePath();
     ctx.fillStyle = fill; 
-    ctx.fillRect(this.x, this.y, this.w, this.h);
+    ctx.fill();
   }
 
   this.addForce = function(f)
