@@ -39,7 +39,10 @@ function Simulator()
       var s_ = this;
       setInterval(function() { s_.draw(); }, this.timeInterval);
 
-      this.addRect(20,20,5,'#FFC02B');
+      this.addParticle(20,20,5,'#FFC02B');
+      this.addParticle(20,40,5,'#A60000');
+      this.addParticle(20,60,5,'#200772');
+      this.addParticle(20,80,5,'#007046');
     }
   }
 
@@ -95,7 +98,7 @@ function Simulator()
     this.canvasValid=false;
   }
 
-  this.addRect = function(x,y,r,fill)
+  this.addParticle = function(x,y,r,fill)
   {
     var p = new Particle(x,y,r,fill);
     this.particles.push(p);
