@@ -20,8 +20,6 @@ function Simulator()
     if(this.canvas.getContext)
     {
       this.context=this.canvas.getContext("2d");
-    this.context.fillStyle = "rgb(200, 0, 0)";
-    this.context.fillRect(200, 200, 40, 40);
 
       this.ghostcanvas = document.createElement('canvas');
       this.ghostcanvas.height = 400;
@@ -31,8 +29,6 @@ function Simulator()
 
       this.canvas.onselectstart = function () { return false; }
 
-      // add our events. Up and down are for dragging,
-      // double click is for making new boxes
       this.canvas.onmousedown = this.myDown;
       this.canvas.onmouseup = this.myUp;
       this.canvas.ondblclick = this.myDblClick;
