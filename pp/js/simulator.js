@@ -16,8 +16,6 @@ function Simulator()
 
   this.init = function() 
   {
-    alert("Simulator::init");
-
     this.canvas=document.getElementById("simulatorCanvas");
     if(this.canvas.getContext)
     {
@@ -42,14 +40,14 @@ function Simulator()
 
       //initStageObjects();
       //drawStageObjects();
-      setInterval(this.draw, this.timeInterval);
+      var s_ = this;
+      setInterval(function() { s_.draw(); }, this.timeInterval);
 
       // add an orange rectangle
-      this.addRect(200, 200, 40, 40, '#FFC02B');
+      this.addRect(60, 60, 20, 40, '#FFC02B');
  
       // add a smaller blue rectangle
       this.addRect(25, 90, 25, 25, '#2BB8FF');
-      alert("test");
     }
   }
 
@@ -57,8 +55,8 @@ function Simulator()
   {
     if(this.canvasValid == false) 
     {
-      alert("Simulator::draw");
-      clear(this.context);
+      //clear(this.context);
+      this.canvas.width=this.canvas.width;
  
       // Add stuff you want drawn in the background all the time here
  
@@ -66,7 +64,6 @@ function Simulator()
       var l = this.particles.length;
       for (i = 0; i < this.particles.length; i++) 
       {
-        alert("loop draw");
         this.particles[i].draw(this.context, this.particles[i].fill);
       }
  
@@ -103,15 +100,12 @@ function Simulator()
   {
     alert("invalidate");
     this.canvasValid=false;
-    alert("invalidate " + this.canvasValid);
   }
 
   this.addRect = function(x,y,w,h,fill)
   {
-    alert("addRect " + x + ", " + y + ", " + w + ", " + h + ", " + fill);
     var p = new Particle(x,y,h,w,fill);
     this.particles.push(p);
     this.invalidate(); 
-    alert("addRect : Leaving");
   }
 }

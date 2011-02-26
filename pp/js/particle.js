@@ -14,7 +14,6 @@ function Particle(x,y,w,h,fill)
   //this.position = [-1, -1, -1]; //Evolves frame to frame
   //this.velocity = [-1, -1, -1]; //Evolves frame to frame
   //this.force = [-1, -1, -1]; //Computed for each frame
-  alert("Particle");
 
   this.update = function(t)
   {
@@ -23,7 +22,6 @@ function Particle(x,y,w,h,fill)
 
   this.draw = function(ctx, fill)
   {
-    alert("Particle::draw");
     ctx.fillStyle = fill; 
     ctx.fillRect(this.x, this.y, this.w, this.h);
   }
