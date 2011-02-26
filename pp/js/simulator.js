@@ -94,7 +94,6 @@ function Simulator()
   
   this.invalidate = function()
   {
-    alert("invalidate");
     this.canvasValid=false;
   }
 
