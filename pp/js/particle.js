@@ -6,19 +6,49 @@ function Particle(r0, v0, m)
   this.r=r0; 
   this.v=v0; 
   this.mass=m; 
+  this.force = [0, 0, 0];
 
-  this.update = function(t)
+  this.getR = function()
   {
-    
+    return this.r;
   }
 
+  this.getV = function()
+  {
+    return this.v;
+  }
+
+  this.getM = function()
+  {
+    return this.mass;
+  }
+
+  this.setR = function(r)
+  {
+    this.r = r;
+  }
+
+  this.setV = function(v)
+  {
+    this.v = v;
+  }
 
   this.addForce = function(f)
   {
-    //Sum the forces
     for(i=0; i<3; i++)
     {
-      //this.force[i]+=f[i];
+      this.force[i]+=f[i];
     }
+  }
+
+  this.acceleration = function()
+  {
+    var a = [0, 0, 0];
+    for(i=0; i<3; i++)
+    {
+      a[i]=this.force[i] / this.mass;
+    }
+    
+    return a;
   }
 }
