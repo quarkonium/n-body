@@ -7,6 +7,7 @@ function Particle(r0, v0, m)
   this.v=v0; 
   this.mass=m; 
   this.force = [0, 0, 0];
+  this.radius=Math.log(this.mass);
 
   this.getR = function()
   {
@@ -31,6 +32,11 @@ function Particle(r0, v0, m)
   this.setV = function(v)
   {
     this.v = v;
+  }
+
+  this.getRadius = function()
+  {
+    return this.radius;
   }
 
   this.addForce = function(f)

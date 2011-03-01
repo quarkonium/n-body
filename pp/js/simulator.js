@@ -10,18 +10,20 @@ function Simulator()
   this.Y_MAX = [false, false, false];
 
   //Particle initial values
-  this.NUMBER_OF_PARTICLES = 3;
+  this.NUMBER_OF_PARTICLES = 9;
   //this.NUMBER_OF_PARTICLES = 2;
   //this.NUMBER_OF_PARTICLES = 1;
-  this.colours = ['#FFC02B', '#A60000', '#200772', '#007046'];
+  this.colours = ['#FFC02B', '#A60000', '#200772', '#007046', '#FFC02B', '#A60000', '#200772', '#007046', '#FFC02B'];
 
   //this.initial_positions = [[100, 10, 0], [100, 80, 0],[100, 200, 0 ]];
   //this.initial_positions = [[100, 100, 0], [300, 250, 0],[200, 100, 0 ]];
-  this.initial_positions = [[100.0, 100.0, 0.0], [300.0, 250.0, 0.0],[200.0, 100.0, 0.0 ]];
+  //this.initial_positions = [[100.0, 100.0, 0.0], [300.0, 250.0, 0.0],[200.0, 100.0, 0.0 ]];
+  this.initial_positions = [[100.0, 100.0, 0.0], [300.0, 250.0, 0.0],[200.0, 100.0, 0.0 ], [100.0, 300.0, 0.0], [300.0, 50.0, 0.0], [200.0, 10.0, 0.0 ], [100.0, 10.0, 0.0], [30.0, 25.0, 0.0],[20.0, 100.0, 0.0 ]];
   //this.initial_positions = [[10, 200, 0], [300, 200, 0],[200, 200, 0 ]];
   //this.initial_positions = [[200, 10, 0], [200, 200, 0],[200, 200, 0 ]];
-  this.initial_velocities = [[8.0, 0.0, 0], [0.0, 0.0, 0.0],[0.0, 8.0, 0.0 ]];
-  this.mass = [1, 2000, 1];
+  //this.initial_velocities = [[8.0, 0.0, 0], [0.0, 0.0, 0.0],[0.0, 8.0, 0.0 ]];
+  this.initial_velocities = [[8.0, 0.0, 0], [0.0, 0.0, 0.0],[0.0, 8.0, 0.0 ], [8.0, 0.0, 0], [0.0, 0.0, 0.0], [0.0, 8.0, 0.0 ], [8.0, 0.0, 0], [0.0, 0.0, 0.0],[0.0, 8.0, 0.0 ]];
+  this.mass = [110.0, 200.0, 60.0, 30.0, 100.0, 40.0, 60.0, 50.0, 10.0];
   this.particles = [];
 
   this.mySel = null;
@@ -254,33 +256,32 @@ function Simulator()
       v_new[0] = this.particles[i].getV()[0] + (1/6.0) * (k1v_i[i][0] + 2.0 * k2v_i[i][0] + 2.0 * k3v_i[i][0] + k4v_i[i][0]);
       v_new[1] = this.particles[i].getV()[1] + (1/6.0) * (k1v_i[i][1] + 2.0 * k2v_i[i][1] + 2.0 * k3v_i[i][1] + k4v_i[i][1]);
 
-      //alert("particle " + i + ", r_new[0] " + r_new[0] + ", r_new[1] " + r_new[1]);
-
-      if(r_new[0] < 5 || r_new[0] > this.canvas.width - 5)
+      var radius = this.particles[i].getRadius();
+      if(r_new[0] <  radius || r_new[0] > this.canvas.width - radius)
       {
         v_new[0] = -1*v_new[0]*0.5;
 
-        if(r_new[0] < 5)
+        if(r_new[0] < radius)
         {
-          r_new[0] += 5 - r_new[0];
+          r_new[0] += radius - r_new[0];
         }
-        else if(r_new[0] > this.canvas.width -5)
+        else if(r_new[0] > this.canvas.width -radius)
         {
-          r_new[0] -= 5 - (this.canvas.width - r_new[0]);
+          r_new[0] -= radius - (this.canvas.width - r_new[0]);
         }
       }
 
-      if(r_new[1] < 5 || r_new[1] > this.canvas.height - 5)
+      if(r_new[1] < radius || r_new[1] > this.canvas.height - radius)
       {
         v_new[1] = -1*v_new[1]*0.5;
 
-        if(r_new[1] < 5)
+        if(r_new[1] < radius)
         {
-          r_new[1] += 5 - r_new[1];
+          r_new[1] += radius - r_new[1];
         }
-        else if(r_new[1] > this.canvas.height -5)
+        else if(r_new[1] > this.canvas.height -radius)
         {
-          r_new[1] -= 5 - (this.canvas.height - r_new[1]);
+          r_new[1] -= radius - (this.canvas.height - r_new[1]);
         }
       }
 
@@ -327,7 +328,7 @@ function Simulator()
       var r = this.particles[i].getR();
 
       this.context.beginPath();
-      this.context.arc(r[0], r[1], 5, 0, this.PIx2, true);
+      this.context.arc(r[0], r[1], this.particles[i].getRadius(), 0, this.PIx2, true);
       this.context.closePath();
       this.context.fillStyle = this.colours[i];
       this.context.fill();
