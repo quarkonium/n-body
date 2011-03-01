@@ -11,31 +11,19 @@ function Simulator()
 
   //Particle initial values
   this.NUMBER_OF_PARTICLES = 9;
-  //this.NUMBER_OF_PARTICLES = 2;
-  //this.NUMBER_OF_PARTICLES = 1;
   this.colours = ['#FFC02B', '#A60000', '#200772', '#007046', '#FFC02B', '#A60000', '#200772', '#007046', '#FFC02B'];
 
-  //this.initial_positions = [[100, 10, 0], [100, 80, 0],[100, 200, 0 ]];
-  //this.initial_positions = [[100, 100, 0], [300, 250, 0],[200, 100, 0 ]];
-  //this.initial_positions = [[100.0, 100.0, 0.0], [300.0, 250.0, 0.0],[200.0, 100.0, 0.0 ]];
   this.initial_positions = [[100.0, 100.0, 0.0], [300.0, 250.0, 0.0],[200.0, 100.0, 0.0 ], [100.0, 300.0, 0.0], [300.0, 50.0, 0.0], [200.0, 10.0, 0.0 ], [100.0, 10.0, 0.0], [30.0, 25.0, 0.0],[20.0, 100.0, 0.0 ]];
-  //this.initial_positions = [[10, 200, 0], [300, 200, 0],[200, 200, 0 ]];
-  //this.initial_positions = [[200, 10, 0], [200, 200, 0],[200, 200, 0 ]];
-  //this.initial_velocities = [[8.0, 0.0, 0], [0.0, 0.0, 0.0],[0.0, 8.0, 0.0 ]];
   this.initial_velocities = [[8.0, 0.0, 0], [0.0, 0.0, 0.0],[0.0, 8.0, 0.0 ], [8.0, 0.0, 0], [0.0, 0.0, 0.0], [0.0, 8.0, 0.0 ], [8.0, 0.0, 0], [0.0, 0.0, 0.0],[0.0, 8.0, 0.0 ]];
   this.mass = [110.0, 200.0, 60.0, 30.0, 100.0, 40.0, 60.0, 50.0, 10.0];
   this.particles = [];
 
   this.mySel = null;
   this.canvasValid=true;
-  this.t=0; // time in ms
   this.fps = 50; // frames per second
-  //this.delta_t = 1000/this.fps; // in ms
-  this.delta_t = 5/this.fps; // in ms
+  this.delta_t = 5/this.fps;
   this.canvas = null; // canvas DOM object
   this.context = null; // canvas context
-  this.ghostcanvas = null; // canvas context
-  this.gctx = null; // canvas context
 
   this.init = function() 
   {
@@ -44,21 +32,8 @@ function Simulator()
     {
       this.context=this.canvas.getContext("2d");
 
-      this.ghostcanvas = document.createElement('canvas');
-      this.ghostcanvas.height = this.canvas.height;
-      this.ghostcanvas.width = this.canvas.width;
-      this.gctx = this.ghostcanvas.getContext('2d');
-
-
       this.canvas.onselectstart = function () { return false; }
 
-      this.canvas.onmousedown = this.myDown;
-      this.canvas.onmouseup = this.myUp;
-      this.canvas.ondblclick = this.myDblClick;
-
-
-      //initStageObjects();
-      //drawStageObjects();
       var s_ = this;
       setInterval(function() { s_.draw(); }, this.delta_t);
 
@@ -67,9 +42,6 @@ function Simulator()
       {
         this.addParticle(this.initial_positions[i], this.initial_velocities[i], this.mass[i]);
       }
-
-      //this.forces();
-
 
       //Draw all particles with their initial positions
       this.draw_particles();
