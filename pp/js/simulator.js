@@ -90,7 +90,7 @@ function Simulator()
     var acc_i = [];
     if(this.NUMBER_OF_PARTICLES == 1)
     {
-      return [0, 0, 0];
+      return [[0, 0, 0]];
     }
 
     //Calculate the forces acting on each particle due to the others
